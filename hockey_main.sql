@@ -26,9 +26,10 @@ CONSTRAINT PK_hky_teams PRIMARY KEY (team_id)
 );
 
 /* add primary key to hockey teams table */
+/*
 ALTER TABLE hky_teams
 ADD CONSTRAINT PK_hky_teams 
-PRIMARY KEY (team_id);
+PRIMARY KEY (team_id);*/
 
 /* create hockey players table */
 CREATE TABLE hky_players
@@ -52,6 +53,10 @@ ADD player_jersey_num TINYINT
 CONSTRAINT CHK_player_jersey_num CHECK (player_jersey_num LIKE '[0-9][0-9]' OR player_jersey_num LIKE '[0-9]'),
 player_height CHAR(6), /* FORM 5' 10" */
 player_weight TINYINT;
+
+/* change the player_weight column data type from tinyint to int */
+ALTER TABLE hky_players
+ALTER COLUMN player_weight INT;
 
 /* insert teams into hockey teams table */
 INSERT INTO hky_teams
@@ -130,32 +135,36 @@ VALUES
 INSERT INTO hky_players
 (player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
 VALUES
-(89,	'MIKKEL',	'BOEDKER',  	'LW',	'6'' 0"',	211, '12/16/1989', 2),
-(24,	'KYLE',		'CHIPCHURA',  	'C',	'6'' 2"',	203, '02/19/1986', 2),
-(22,	'CRAIG',	'CUNNINGHAM',  	'Lw',	'5'' 10"',	184, '09/13/1990', 2),
-19	SHANE DOAN "C" 	R	6' 1"	223	OCT 10, 1976	39	HALKIRK, AB, CAN
-16	MAX DOMI  	L	5' 10"	198	MAR 2, 1995	20	WINNIPEG, MB, CAN
-17	STEVE DOWNIE  	R	5' 11"	191	APR 3, 1987	28	NEWMARKET, ON, CAN
-10	ANTHONY DUCLAIR  	L	5' 11"	185	AUG 26, 1995	20	POINTE-CLAIRE, QC, CAN
-15	BOYD GORDON  	C	6' 0"	200	OCT 19, 1983	32	UNITY, SK, CAN
-11	MARTIN HANZAL "A" 	C	6' 6"	226	FEB 20, 1987	28	PISEK, CZE
-48	JORDAN MARTINOOK  	L	6' 0"	202	JUL 25, 1992	23	BRANDON, MB, CAN
-12	BRAD RICHARDSON  	R	6' 0"	197	FEB 4, 1985	30	BELLEVILLE, ON, CAN
-8	TOBIAS RIEDER  	R	5' 11"	185	JAN 10, 1993	22	LANDSHUT, DEU
-28	JOHN SCOTT  	L	6' 8"	260	SEP 26, 1982	33	EDMONTON, AB, CAN
-50	ANTOINE VERMETTE  	C	6' 1"	198	JUL 20, 1982	33	ST. AGAPIT, QC, CAN
-14	JOE VITALE  	C	5' 11"	205	AUG 20, 1985	30	ST. LOUIS, MO, USA
-34	KLAS DAHLBECK  	6' 3"	207	JUL 6, 1991	24	KATRINEHOLM, SWE
-23	OLIVER EKMAN-LARSSON "A" 	6' 2"	200	JUL 17, 1991	24	KARLSKRONA, SWE
-45	STEFAN ELLIOTT  	6' 1"	190	JAN 30, 1991	24	VANCOUVER, BC, CAN
-2	NICKLAS GROSSMANN  	6' 4"	230	JAN 22, 1985	30	STOCKHOLM, SWE
-4	ZBYNEK MICHALEK  	6' 2"	210	DEC 23, 1982	32	JINDRICHUV HRADEC, CZE
-5	CONNOR MURPHY  	6' 4"	212	MAR 26, 1993	22	DUBLIN, OH, USA
-25	PHILIP SAMUELSSON  	6' 2"	194	JUL 26, 1991	24	LEKSAND, SWE
-26	MICHAEL STONE  	6' 3"	210	JUN 7, 1990	25	WINNIPEG, MB, CAN
-35	LOUIS DOMINGUE  	6' 3"	210	MAR 6, 1992	23	ST-HYACINTHE, QC, CAN
-29	ANDERS LINDBACK  	6' 6"	215	MAY 3, 1988	27	GÄVLE, SWE
-41	MIKE SMITH  	6' 4"	215	MAR 22, 1982	33	KINGSTON, ON, CAN);
+(89,	'Mikkel',	'Boedker',  	'LW',	'6'' 0"',	211, '12/16/1989', 2),
+(24,	'Kyle',		'Chipchura',  	'C',	'6'' 2"',	203, '02/19/1986', 2),
+(22,	'Craig',	'Cunningham',  	'LW',	'5'' 10"',	184, '09/13/1990', 2),
+(19, 	'Shane',	'Doan', 		'RW',	'6'' 1"',	223, '10/10/1976', 2),	
+(16,	'Max',		'Domi',  		'LW',	'5'' 10"',	198, '03/02/1995', 2),
+(17,	'Steve',	'Downie',  		'RW',	'5'' 11"',	191, '04/03/1987', 2),
+(10,	'Anthony',	'Duclair',		'LW',   '5'' 11"',	185, '08/25/1995', 2),
+(15,	'Boyd',		'Gordon',		'C',	'6'' 0"',	200, '10/19/1983', 2),
+(11,	'Martin',	'Hanzal',		'C',	'6'' 6"',	226, '02/20/1987', 2),
+(48,	'Jordan',	'Martinook',	'LW',	'6'' 0"',	202, '07/25/1992', 2),
+(12,	'Brad',		'Richardson',	'RW',	'6'' 0"',	197, '02/04/1985', 2),
+(8,		'Tobias',	'Rieder',		'RW',	'5'' 11"',  185, '01/10/1993', 2),
+(28,	'John',		'Scott',		'LW',	'6'' 8"',	260, '09/26/1982', 2),
+(50,	'Antoine',  'Vermette',		'C',	'6'' 1"',	198, '07/20/1982', 2),
+(14,	'Joe',		'Vitale',		'C',	'5'' 11"',  205, '08/20/1985', 2),
+(34,	'Klas',		'Dahlbeck',		'D',	'6'' 3"',	207, '07/06/1991', 2),
+(23,	'Oliver',	'Ekman-Larsson','D',  	'6'' 2"',	200, '07/17/1991', 2),
+(45,	'Stefan',	'Elliott',		'D',	'6'' 1"',	190, '01/30/1991', 2),
+(2,		'Nicklas',	'Grossman',		'D',	'6'' 4"',	230, '01/22/1985', 2),
+(4,		'Zbynek',	'Michalek',		'D',	'6'' 2"',	210, '12/23/1982', 2),
+(5,		'Connor',	'Murphy',		'D',	'6'' 4"',	212, '03/26/1993', 2),
+(25,	'Philip',	'Samuelsson',	'D',	'6'' 2"',	194, '07/26/1991', 2),
+(26,	'Michael',	'Stone',		'D',	'6'' 3"',	210, '07/07/1990', 2),
+(35,	'Louis',	'Domingue',		'D',	'6'' 3"',	210, '03/06/1992', 2),
+(29,	'Anders',	'Lindback',		'G',	'6'' 6"',	215, '05/03/1988', 2),
+(41,	'Mike',		'Smith',		'G',	'6'' 4"',	215, '03/22/1982', 2);
+
+/* remove Louis Domingue from Arizona Coyotes' roster */
+DELETE FROM hky_players
+WHERE player_jersey_num = 35;
 
 /* query the hky_players table to see if insert statement worked as intended */
 SELECT CONCAT(player_firstname, ' ', player_lastname) AS Player, CONCAT(team_city, ' ', team_name) AS Team,
