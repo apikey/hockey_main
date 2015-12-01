@@ -166,6 +166,45 @@ VALUES
 DELETE FROM hky_players
 WHERE player_jersey_num = 35;
 
+/* add Boston Bruins 2015 roster to database */
+INSERT INTO hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(39, 'Matt', 'Beleskey', 'LW', '6'' 0"', 203, '06/07/1988', 3),
+(37, 'Patrice', 'Bergeron', 'C', '6'' 1"', 195, '07/24/1985', 3),
+(14, 'Brett', 'Connolly', 'RW', '6'' 2"', 193, '05/02/1992', 3),
+(21, 'Loui', 'Eriksson', 'RW', '6'' 2"', 183, '07/17/1985', 3),
+(29, 'Landon', 'Ferraro', 'C', '6'' 0"', 186, '08/08/1991', 3),
+(11, 'Jimmy', 'Hayes', 'RW', '6'' 5"', 215, '11/21/1989', 3),
+(23, 'Chris', 'Kelly', 'C', '6'' 0"', 193, '11/11/1980', 3),
+(41, 'Joonas', 'Kemppainen', 'C', '6'' 3"', 223, '04/07/1988', 3),
+(46, 'David', 'Krejci', 'C', '6'' 0"', 186, '04/28/1986', 3),
+(63, 'Brad', 'Marchand', 'LW', '5'' 9"', 181, '05/11/1988', 3),
+(88, 'David', 'Pastrnak', 'RW', '6'' 0"', 181, '05/25/1996', 3),
+(64, 'Tyler', 'Randell', 'RW', '6'' 1"', 198, '06/15/1991', 3),
+(36, 'Zac', 'Rinaldo', 'C', '5'' 10"', 188, '06/15/1990', 3),
+(51, 'Ryan', 'Spooner', 'C', '5'' 10"', 184, '01/30/1992', 3),
+(25, 'Max', 'Talbot', 'C', '5'' 11"', 186, '02/11/1984', 3),
+(72, 'Frank', 'Vatrano', 'C', '5'' 9"', 201, '03/14/1994', 3),
+(33, 'Zdeno', 'Chara', 'D', '6'' 9"', 250, '03/18/1977', 3),
+(47, 'Torey', 'Krug', 'D', '5'' 9"', 186, '04/12/1991', 3),
+(54, 'Adam', 'McQuaid', 'D', '6'' 4"', 212, '10/12/1986', 3),
+(48, 'Colin', 'Miller', 'D', '6'' 1"', 196, '10/29/1992', 3),
+(86, 'Kevan', 'Miller', 'D', '6'' 2"', 210, '11/15/1987', 3),
+(45, 'Joe', 'Morrow', 'D', '6'' 0"', 199, '12/09/1992', 3),
+(44, 'Dennis', 'Seidenberg', 'D', '6'' 0"', 198, '07/18/1981', 3),
+(62, 'Zach', 'Trotman', 'D', '6'' 3"', 217, '08/26/1990', 3),
+(50, 'Jonas', 'Gustavsson', 'G', '6'' 4"', 201, '10/24/1984', 3),
+(40, 'Tuukka', 'Rask', 'G', '6'' 3"', 176, '03/10/1987', 3);
+
+/* Buffalo Sabres 2015 roster */
+INSERT INTO hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(44, 'Nicolas', 'Deslauriers', 'LW', '6'' 1"', 212, '02/22/1991', 4),
+(15, 'Jack', 'Eichel', 'C', '6'' 2"', 201, '10/28/1996', 4),
+(
+
 /* query the hky_players table to see if insert statement worked as intended */
 SELECT CONCAT(player_firstname, ' ', player_lastname) AS Player, CONCAT(team_city, ' ', team_name) AS Team,
 CASE player_position
