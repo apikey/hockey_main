@@ -163,11 +163,11 @@ VALUES
 (41,	'Mike',		'Smith',		'G',	'6'' 4"',	215, '03/22/1982', 2);
 
 /* remove Louis Domingue from Arizona Coyotes' roster */
-DELETE FROM hky_players
-WHERE player_jersey_num = 35;
+DELETE FROM hockey_main.dbo.hky_players
+WHERE hockey_main.dbo.hky_players.player_jersey_num = 35;
 
 /* add Boston Bruins 2015 roster to database */
-INSERT INTO hky_players
+INSERT INTO hockey_main.dbo.hky_players
 (player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
 VALUES
 (39, 'Matt', 'Beleskey', 'LW', '6'' 0"', 203, '06/07/1988', 3),
@@ -198,12 +198,124 @@ VALUES
 (40, 'Tuukka', 'Rask', 'G', '6'' 3"', 176, '03/10/1987', 3);
 
 /* Buffalo Sabres 2015 roster */
-INSERT INTO hky_players
+INSERT INTO hockey_main.dbo.hky_players
 (player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
 VALUES
 (44, 'Nicolas', 'Deslauriers', 'LW', '6'' 1"', 212, '02/22/1991', 4),
 (15, 'Jack', 'Eichel', 'C', '6'' 2"', 201, '10/28/1996', 4),
-(
+(63, 'Tyler', 'Ennis', 'C', '5'' 9"', 160, '10/06/1989', 4),
+(82, 'Marcus', 'Foligno', 'LW', '6'' 3"', 226, '08/10/1991', 4),
+(12, 'Brian', 'Gionta', 'RW', '5'' 7"', 178, '01/18/1979', 4),
+(28, 'Zemgus', 'Girgensons', 'C', '6'' 1"', 203, '01/05/1994', 4),
+(9, 'Evander', 'Kane', 'LW', '6'' 2"', 204, '08/02/1991', 4),
+(22, 'Johan', 'Larsson', 'LW', '5'' 11"', 200, '07/25/1992', 4),
+(17, 'David', 'Legwand', 'C', '6'' 2"', 207, '08/17/1980', 4),
+(8, 'Cody', 'McCormick', 'C', '6'' 2"', 228, '04/18/1983', 4),
+(88, 'Jamie', 'McGinn', 'LW', '6'' 1"', 205, '08/05/1988', 4),
+(26, 'Matt', 'Moulson', 'LW', '6'' 1"', 212, '11/01/1983', 4),
+(90, 'Ryan', 'O''Reilly', 'C', '6'' 1"', 210, '02/07/1991', 4),
+(23, 'Sam', 'Reinhart', 'C', '6'' 1"', 189, '11/06/1995', 4),
+(59, 'Tim', 'Schaller', 'C', '6'' 2"', 219, '11/16/1990', 4),
+(47, 'Zach', 'Bogosian', 'D', '6'' 3"', 219, '07/15/1990', 4),
+(25, 'Carlo', 'Colaiacovo', 'D', '6'' 1"', 202, '01/27/1983', 4),
+(46, 'Cody', 'Franson', 'D', '6'' 5"', 234, '08/08/1987', 4),
+(4, 'Josh', 'Gorges', 'D', '6'' 1"', 203, '08/14/1987', 4),
+(29, 'Jake', 'McCabe', 'D', '6'' 0"', 214, '10/12/1993', 4),
+(3, 'Mark', 'Pysyk', 'D', '6'' 1"', 200, '01/11/1992', 4),
+(55, 'Rasmus', 'Ristolainen', 'D', '6'' 4"', 207, '10/27/1994', 4),
+(6, 'Mike', 'Weber', 'D', '6'' 2"', 217, '12/16/1987', 4),
+(31, 'Chad', 'Johnson', 'G', '6'' 3"', 196, '06/10/1986', 4),
+(40, 'Robin', 'Lehner', 'G', '6'' 5"', 240, '07/24/1991', 4),
+(35, 'Linus', 'Ullmark', 'G', '6'' 4"', 212, '07/31/1993', 4);
+
+/* Calgary Flames roster 2015 */
+INSERT INTO hockey_main.dbo.hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(11, 'Mikael', 'Backlund', 'C', '6'' 1"', 199, '03/15/1989', 5),
+(93, 'Sam', 'Bennett', 'C', '6'' 1"', 186, '06/20/1996', 5),
+(52, 'Brandon', 'Bollig', 'LW', '6'' 2"', 220, '01/31/1987', 5),
+(17, 'Lance', 'Bouma', 'C', '6'' 2"', 208, '03/25/1990', 5),
+(8, 'Joe', 'Coloborne', 'C', '6'' 5"', 221, '01/30/1990', 5),
+(79, 'Michael', 'Ferland', 'LW', '6'' 2"', 208, '04/20/1992', 5),
+(67, 'Michael', 'Frolik', 'RW', '6'' 1"', 194, '02/17/1988', 5),
+(13, 'Johnny', 'Gaudreau', 'LW', '5'' 9"', 157, '08/13/1993', 5),
+(60, 'Markus', 'Granlund', 'C', '6'' 0"', 178, '04/16/1993', 5),
+(24, 'Jiri', 'Hudler', 'C', '5'' 10"', 183, '01/04/1984', 5),
+(19, 'David', 'Jones', 'RW', '6'' 3"', 208, '08/10/1984', 5),
+(16, 'Josh', 'Jooris', 'C', '6'' 1"', 187, '07/14/1990', 5),
+(23, 'Sean', 'Monahan', 'C', '6'' 3"', 195, '10/12/1994', 5),
+(21, 'Mason', 'Raymond', 'LW', '6'' 1"', 179, '09/17/1985', 5),
+(18, 'Matt', 'Stajan', 'C', '6'' 1"', 195, '12/19/1983', 5),
+(7, 'TJ', 'Brodie', 'D', '6'' 1"', 182, '06/07/1990', 5),
+(29, 'Deryk', 'Engelland', 'D', '6'' 2"', 214, '04/03/1982', 5),
+(5, 'Mark', 'Giordano', 'D', '6'' 0"', 198, '10/03/1983', 5),
+(27, 'Dougie', 'Hamilton', 'D', '6'' 6"', 210, '06/17/1993', 5),
+(33, 'Jakub', 'Nakladal', 'D', '6'' 2"', 212, '12/30/1987', 5),
+(4, 'Kris', 'Russell', 'D', '5'' 10"', 170, '05/02/1987', 5),
+(15, 'Ladislav', 'Smid', 'D', '6'' 4"', 210, '02/01/1986', 5),
+(6, 'Dennis', 'Wideman', 'D', '6'' 0"', 202, '03/20/1983', 5),
+(1, 'Jonas', 'Hiller', 'G', '6'' 2"', 191, '02/12/1982', 5),
+(31, 'Karri', 'Ramo', 'G', '6'' 2"', 206, '07/01/1986', 5);
+
+/* carolina hurricanes 2015 roster */
+INSERT INTO hockey_main.dbo.hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(34, 'Phillip', 'Di Giuseppe', 'LW', '6'' 0"', 200, '10/09/1993', 6),
+(14, 'Nathan', 'Gerbe', 'LW', '5'' 5"', 178, '07/24/1987', 6),
+(16, 'Elias', 'Lindholm', 'C', '6'' 1"', 192, '12/02/1994', 6),
+(24, 'Brad', 'Malone', 'C', '6'' 2"', 207, '05/20/1989', 6),
+(18, 'Jay', 'McClement', 'C', '6'' 1"', 205, '03/02/1983', 6),
+(23, 'Brock', 'McGinn', 'LW', '6'' 0"', 185, '02/02/1994', 6),
+(20, 'Riley', 'Nash', 'C', '6'' 1"', 200, '05/09/1989', 6),
+(15, 'Andrej', 'Nestrasil', 'C', '6'' 3"', 200, '02/22/1991', 6),
+(42, 'Joakim', 'Nordstrom', 'LW', '6'' 1"', 189, '02/25/1992', 6),
+(49, 'Victor', 'Rask', 'C', '6'' 2"', 200, '03/01/1993', 6),
+(53, 'Jeff', 'Skinner', 'LW', '5'' 11"', 200, '05/16/1992', 6),
+(12, 'Eric', 'Staal', 'C', '6'' 4"', 205, '10/29/1984', 6),
+(11, 'Jordan', 'Staal', 'C', '6'' 4"', 220, '09/10/1988', 6),
+(25, 'Chris', 'Terry', 'LW', '5'' 10"', 195, '04/07/1989', 6),
+(32, 'Kris', 'Versteeg', 'RW', '5'' 11"', 176, '05/13/1986', 6),
+(27, 'Justin', 'Faulk', 'D', '6'' 0"', 215, '03/20/1992', 6),
+(65, 'Ron', 'Hainsey', 'D', '6'' 3"', 210, '03/24/1981', 6),
+(5, 'Noah', 'Hanifin', 'D', '6'' 3"', 206, '01/25/1997', 6),
+(47, 'Michal', 'Jordan', 'D', '6'' 1"', 195, '07/17/1990', 6), 
+(26, 'John-Michael', 'Liles', 'D', '5'' 10"', 185, '11/25/1980', 6),
+(54, 'Brett', 'Pesce', 'D', '6'' 3"', 200, '11/15/1994', 6),
+(74, 'Jaccob', 'Slavin', 'D', '6'' 2"', 205, '05/01/1994', 6),
+(21, 'James', 'Wisniewski', 'D', '5'' 11"', 203, '02/21/1984', 6),
+(31, 'Eddie', 'Lack', 'G', '6'' 4"', 187, '01/05/1988', 6),
+(30, 'Cam', 'Ward', 'G', '6'' 1"', 185, '02/29/1984', 6);
+
+/* chicago blackhawks 2015 roster */
+INSERT INTO hockey_main.dbo.hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(15, 'Artem', 'Anisimov', 'C', '6'' 4"', 198, '05/24/1988', 7),
+(56, 'Marko', 'Dano', 'RW', '5'' 11"', 183, '11/30/1994', 7),
+(11, 'Andrew', 'Desjardins', 'LW', '6'' 1"', 195, '07/27/1986', 7),
+(28, 'Ryan', 'Garbutt', 'LW', '6'' 0"', 195, '08/12/1985', 7),
+(81, 'Marian', 'Hossa', 'RW', '6'' 1"', 207, '01/12/1979', 7),
+(88, 'Patrick', 'Kane', 'RW', '5'' 11"', 177, '11/19/1988', 7),
+(67, 'Tanner', 'Kero', 'C', '6'' 0"', 185, '07/24/1992', 7),
+(16, 'Marcus', 'Kruger', 'C', '6'' 0"', 186, '05/27/1990', 7),
+(53, 'Brandon', 'Mashinter', 'LW', '6'' 4"', 212, '09/20/1988', 7),
+(72, 'Artemi', 'Panarin', 'LW', '5'' 11"', 170, '10/30/1991', 7),
+(65, 'Andrew', 'Shaw', 'RW', '5'' 11"', 179, '07/20/1991', 7),
+(86, 'Teuvo', 'Teravainen', 'C', '5'' 11"', 178, '09/11/1994', 7),
+(14, 'Viktor', 'Tikhonov', 'RW', '6'' 2"', 189, '09/12/1988', 7),
+(19, 'Jonathan', 'Toews', 'C', '6'' 2"', 201, '04/29/1988', 7),
+(6, 'Trevor', 'Daley', 'D', '5'' 11"', 195, '10/09/1983', 7),
+(4, 'Niklas', 'Hjalmarsson', 'D', '6'' 3"', 197, '06/06/1987', 7),
+(2, 'Duncan', 'Keith', 'D', '6'' 1"', 192, '07/16/1983', 7),
+(32, 'Michal', 'Rozsival', 'D', '6'' 1"', 210, '09/03/1978', 7),
+(5, 'David', 'Rundblad', 'D', '6'' 2"', 187, '10/08/1990', 7),
+(7, 'Brent', 'Seabrook', 'D', '6'' 3"', 220, '04/20/1985', 7),
+(57, 'Trevor', 'Van Riemsdyk', 'D', '6'' 2"', 188, '07/24/1991', 7),
+(50, 'Corey', 'Crawford', 'G', '6'' 2"', 216, '12/31/1984', 7),
+(33, 'Scott', 'Darling', 'G', '6'' 6"', 232, '12/22/1988', 7);
+
 
 /* query the hky_players table to see if insert statement worked as intended */
 SELECT CONCAT(player_firstname, ' ', player_lastname) AS Player, CONCAT(team_city, ' ', team_name) AS Team,
@@ -214,6 +326,11 @@ WHEN 'LW'	THEN 'Left Winger'
 WHEN 'RW'	THEN 'Right Winger'
 WHEN 'C'	THEN 'Center'
 END AS Position
-FROM hky_players AS p
-INNER JOIN hky_teams AS t
+FROM hockey_main.dbo.hky_players AS p
+INNER JOIN hockey_main.dbo.hky_teams AS t
 ON p.team_id = t.team_id;
+
+SELECT * FROM hky_players AS P
+INNER JOIN hky_teams AS T
+ON P.team_id = T.team_id 
+WHERE player_lastname = 'Gaudreau';
