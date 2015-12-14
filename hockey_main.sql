@@ -16,6 +16,51 @@ BEGIN
 END
 */
 
+/* create table for hockey leagues */
+IF NOT EXISTS (SELECT *
+                   FROM INFORMATION_SCHEMA.TABLES
+				   WHERE TABLE_SCHEMA = 'dbo'
+				   AND TABLE_NAME = 'hky_leagues'))
+BEGIN
+  -- create the hockey leagues table
+  CREATE TABLE hockey_main.dbo.hky_leagues
+  (
+      league_id INT NOT NULL IDENTITY(1,1),
+	  league_name VARCHAR(35) NOT NULL,
+	  league_start_date DATE,
+	  league_end_date DATE,
+	  CONSTRAINT PK_league_id PRIMARY KEY (league_id),
+	  CONSTRAINT CHK_league_start_end CHECK (league_start_date < league_end_date)
+  );
+END
+
+/* create table for hockey conferences */
+IF NOT EXISTS (SELECT * 
+                   FROM INFORMATION_SCHEMA.TABLES
+				   WHERE TABLE_SCHEMA = 'dbo'
+				   AND TABLE_NAME = 'hky_conferences'))
+BEGIN
+   -- create the hockey conferences table
+   CREATE TABLE hky_conferences
+   (
+       conference_id INT NOT NULL IDENTITY(1,1),
+	   conference_name VARCHAR(35) NOT NULL,
+	   league_id INT,
+	   CONSTRAINT FK_league_id
+END
+
+/* create table for hockey divisions */
+IF NOT EXISTS (SELECT * 
+                   FROM INFORMATION_SCHEMA.TABLES 
+				   WHERE TABLE_SCHEMA = 'dbo'
+				   AND TABLE_NAME = 'hky_divisions'))
+BEGIN
+   -- create the 
+
+
+
+
+
 /* create hockey teams table */
 CREATE TABLE hky_teams
 (
@@ -30,6 +75,8 @@ CONSTRAINT PK_hky_teams PRIMARY KEY (team_id)
 ALTER TABLE hky_teams
 ADD CONSTRAINT PK_hky_teams 
 PRIMARY KEY (team_id);*/
+
+/* add column to hky_teams with division_id */
 
 /* create hockey players table */
 CREATE TABLE hky_players
@@ -316,9 +363,77 @@ VALUES
 (50, 'Corey', 'Crawford', 'G', '6'' 2"', 216, '12/31/1984', 7),
 (33, 'Scott', 'Darling', 'G', '6'' 6"', 232, '12/22/1988', 7);
 
+/* colorado avalanche 2015 roster */
+INSERT INTO hockey_main.dbo.hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(14, 'Blake', 'Comeau', 'LW', '6'' 1"', 202, '02/18/1986', 8),
+(9, 'Matt', 'Duchene', 'C', '5'' 11"', 200, '01/16/1991', 8),
+(25, 'Mikhail', 'Grigorenko', 'C', '6'' 3"', 209, '05/16/1994', 8),
+(12, 'Jarome', 'Iginla', 'RW', '6'' 1"', 210, '07/01/1977', 8),
+(92, 'Gabriel', 'Landeskog', 'LW', '6'' 1"', 210, '11/23/1992', 8),
+(29, 'Nathan', 'MacKinnon', 'C', '6'' 0"', 195, '09/01/1995', 8),
+(27, 'Andreas', 'Martinsen', 'LW', '6'' 3"', 220, '06/13/1990', 8),
+(55, 'Cody', 'Mcleod', 'LW', '6'' 2"', 210, '06/26/1984', 8),
+(7, 'John', 'Mitchell', 'C', '6'' 1"', 204, '01/22/1985', 8),
+(8, 'Jack', 'Skille', 'RW', '6'' 1"', 216, '05/19/1987', 8),
+(34, 'Carl', 'Soderberg', 'C', '6'' 3"', 216, '10/12/1985', 8),
+(10, 'Ben', 'Street', 'C', '5'' 11"', 185, '02/13/1987', 8),
+(40, 'Alex', 'Tanguay', 'LW', '6'' 1"', 194, '11/21/1979', 8),
+(62, 'Chris', 'Wagner', 'RW', '6'' 0"', 195, '05/27/1991', 8),
+(18, 'Jesse', 'Winchester', 'C', '6'' 1"', 205, '10/04/1983', 8),
+(4, 'Tyson', 'Barrie', 'D', '5'' 10"', 190, '07/26/1991', 8),
+(32, 'Francois', 'Beauchemin', 'D', '6'' 1"', 208, '06/04/1980', 8),
+(46, 'Brandon', 'Gormley', 'D', '6'' 2"', 196, '02/18/1992', 8),
+(5, 'Nate', 'Guenin', 'D', '6'' 3"', 207, '12/10/1982', 8),
+(2, 'Nick', 'Holden', 'D', '6'' 4"', 210, '05/15/1987', 8),
+(6, 'Erik', 'Johnson', 'D', '6'' 4"', 232, '03/21/1988', 8),
+(22, 'Zach', 'Redmond', 'D', '6'' 2"', 205, '07/26/1988', 8),
+(17, 'Brad', 'Stuart', 'D', '6'' 2"', 215, '11/06/1979', 8),
+(20, 'Reto', 'Berra', 'G', '6'' 4"', 210, '01/03/1987', 8),
+(1, 'Semyon', 'Varlamov', 'G', '6'' 2"', 209, '04/27/1988', 8);
+
+/* change the last name of 
+UPDATE hockey_main.dbo.hky_players
+SET player_lastname = 'MacKinnon'
+WHERE player_id = 1171;
+
+/* columbus blue jackets 2015 roster */
+INSERT INTO hockey_main.dbo.hky_players
+(player_jersey_num, player_firstname, player_lastname, player_position, player_height, player_weight, player_birthdate, team_id)
+VALUES
+(13, 'Cam', 'Atkinson', 'RW', '5'' 8"', 180, '06/05/1989', 9),
+(40, 'Jared', 'Boll', 'RW', '6'' 3"', 209, '05/13/1986', 9),
+(18, 'Rene', 'Bourque', 'RW', '6'' 2"', 217, '12/10/1981', 9),
+(11, 'Matt', 'Calvert', 'LW', '5'' 11"', 192, '12/24/1989', 9),
+(9, 'Gregory', 'Campbell', 'C', '6'' 0"', 197, '12/17/1983', 9),
+(23, 'David', 'Clarkson', 'RW', '6'' 0"', 207, '03/31/1987', 9),
+(17, 'Brandon', 'Dubinsky', 'C', '6'' 2"', 216, '04/29/1986', 9),
+(71, 'Nick', 'Foligno', 'LW', '6'' 0"', 210, '10/31/1987', 9),
+(33, 'Markus', 'Hannikainen', 'LW', '6'' 2"', 189, '03/26/1993', 9),
+(43, 'Scott', 'Hartnell', 'LW', '6'' 2"', 214, '04/18/1982', 9),
+(38, 'Boone', 'Jenner', 'C', '6'' 2"', 215, '06/15/1993', 9),
+(19, 'Ryan', 'Johansen', 'C', '6'' 3"', 218, '07/31/1992', 9),
+(25, 'William', 'Karlsson', 'C', '6'' 1"', 188, '01/08/1993', 9),
+(20, 'Brandon', 'Saad', 'LW', '6'' 1"', 202, '10/27/1992', 9),
+(41, 'Alexander', 'Wennberg', 'C', '6'' 1"', 197, '09/22/1994', 9),
+(2, 'Andrew', 'Bodnarchuk', 'D', '5'' 11"', 196, '07/11/1988', 9),
+(4, 'Kevin', 'Connauton', 'D', '6'' 2"', 205, '02/23/1990', 9),
+(44, 'Justin', 'Falk', 'D', '6'' 5"', 224, '10/11/1988', 9),
+(29, 'Cody', 'Goloubef', 'D', '6'' 1"', 201, '11/30/1989', 9),
+(7, 'Jack', 'Johnson', 'D', '6'' 1"', 230, '01/31/1987', 9),
+(27, 'Ryan', 'Murray', 'D', '6'' 1"', 208, '09/27/1993', 9),
+(47, 'Dalton', 'Prout', 'D', '6'' 3"', 230, '03/13/1990', 9),
+(58, 'David', 'Savard', 'D', '6'' 2"', 227, '10/22/1990', 9),
+(51, 'Fedor', 'Tyutin', 'D', '6'' 2"', 221, '07/19/1983', 9),
+(72, 'Sergei', 'Bobrovsky', 'G', '6'' 2"', 199, '09/20/1988', 9),
+(70, 'Joonas', 'Korpisalo', 'G', '6'' 3"', 182, '04/28/1994', 9),
+(30, 'Curtis', 'McElhinney', 'G', '6'' 3"', 205, '05/23/1983', 9)
+
+
 
 /* query the hky_players table to see if insert statement worked as intended */
-SELECT CONCAT(player_firstname, ' ', player_lastname) AS Player, CONCAT(team_city, ' ', team_name) AS Team,
+SELECT player_id AS ID, CONCAT(player_firstname, ' ', player_lastname) AS Player, CONCAT(team_city, ' ', team_name) AS Team,
 CASE player_position
 WHEN 'D'	THEN 'Defenseman'
 WHEN 'G'	THEN 'Goalie'
