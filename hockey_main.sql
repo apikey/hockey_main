@@ -1,74 +1,132 @@
 
-/* HOW TO CHECK IF A TABLE ALREADY EXISTS IN MS SQL SERVER */
-/*
-IF (EXISTS (SELECT * 
-				FROM INFORMATION_SCHEMA.TABLES
-				WHERE TABLE_SCHEMA = 'dbo'
-				AND TABLE_NAME = 'hky_teams'))
-BEGIN
-	-- create the hockey teams table
-	CREATE TABLE hky_teams
-	(
-		team_id INT NOT NULL IDENTITY(1,1),
-		team_city VARCHAR(35) NOT NULL,
-		team_name VARCHAR(35) NOT NULL
-	);
-END
-*/
+/* Designed by Jason Franco, 2015 */
+/* For use in creating a hockey database in Microsoft SQL Server */
 
 /* create table for hockey leagues */
 IF NOT EXISTS (SELECT *
                    FROM INFORMATION_SCHEMA.TABLES
 				   WHERE TABLE_SCHEMA = 'dbo'
-				   AND TABLE_NAME = 'hky_leagues'))
+				   AND TABLE_NAME = 'hky_leagues')
 BEGIN
   -- create the hockey leagues table
   CREATE TABLE hockey_main.dbo.hky_leagues
   (
       league_id INT NOT NULL IDENTITY(1,1),
 	  league_name VARCHAR(35) NOT NULL,
-	  league_start_date DATE,
-	  league_end_date DATE,
+	  league_start_date DATE NULL,
+	  league_end_date DATE NULL,
 	  CONSTRAINT PK_league_id PRIMARY KEY (league_id),
 	  CONSTRAINT CHK_league_start_end CHECK (league_start_date < league_end_date)
   );
 END
 
+/* insert NHL into the leagues table */
+INSERT INTO hockey_main.dbo.hky_leagues
+(league_name, league_start_date)
+VALUES
+('National Hockey League', '11/26/1917');
+
+/* Create INSERT statement in order to verify check constraint on hky_leagues table */
+INSERT INTO hockey_main.dbo.hky_leagues
+(league_name, league_start_date, league_end_date)
+VALUES
+('World Hockey Association', '09/13/1971', '05/20/1979');
+
+SELECT * FROM hockey_main.dbo.hky_leagues;
+
+
 /* create table for hockey conferences */
 IF NOT EXISTS (SELECT * 
                    FROM INFORMATION_SCHEMA.TABLES
 				   WHERE TABLE_SCHEMA = 'dbo'
-				   AND TABLE_NAME = 'hky_conferences'))
+				   AND TABLE_NAME = 'hky_conferences')
 BEGIN
    -- create the hockey conferences table
-   CREATE TABLE hky_conferences
+   CREATE TABLE hockey_main.dbo.hky_conferences
    (
        conference_id INT NOT NULL IDENTITY(1,1),
 	   conference_name VARCHAR(35) NOT NULL,
+	   conference_active BIT NOT NULL,
 	   league_id INT,
-	   CONSTRAINT FK_league_id
+	   CONSTRAINT PK_conference_id PRIMARY KEY (conference_id),
+	   CONSTRAINT FK_league_id FOREIGN KEY (league_id) REFERENCES hockey_main.dbo.hky_leagues(league_id)
+	);
 END
+
+/* Add Conferences from the NHL */
+INSERT INTO hockey_main.dbo.hky_conferences
+(conference_name, conference_active, league_id)
+VALUES
+('Eastern Conference', 1, 1),
+('Western Conference', 1, 1),
+('Clarence Campbell Conference', 0, 1),
+('Prince of Wales Conference', 0, 1);
+
+
+/* list out each conference, the league it is in and status (i.e. active, inactive) */
+SELECT conference_name AS Conference, league_name AS League, CASE conference_active WHEN 0 THEN 'Inactive' WHEN 1 THEN 'Active' END AS 'Status' 
+FROM hockey_main.dbo.hky_conferences AS H
+INNER JOIN hockey_main.dbo.hky_leagues AS L
+ON H.league_id = L.league_id;
+
 
 /* create table for hockey divisions */
 IF NOT EXISTS (SELECT * 
                    FROM INFORMATION_SCHEMA.TABLES 
 				   WHERE TABLE_SCHEMA = 'dbo'
-				   AND TABLE_NAME = 'hky_divisions'))
+				   AND TABLE_NAME = 'hky_divisions')
 BEGIN
-   -- create the 
+   -- create the table for hockey divisions
+   CREATE TABLE hockey_main.dbo.hky_divisions
+   (
+       division_id INT NOT NULL IDENTITY(1,1),
+	   division_name VARCHAR(35) NOT NULL, 
+	   division_active BIT NULL,
+	   league_id INT NOT NULL,
+	   conference_id INT NOT NULL,
+	   CONSTRAINT PK_division_id PRIMARY KEY (division_id),
+	   CONSTRAINT FK_division_league_id FOREIGN KEY (league_id) REFERENCES hockey_main.dbo.hky_leagues (league_id),
+	   CONSTRAINT FK_division_conference_id FOREIGN KEY (conference_id) REFERENCES hockey_main.dbo.hky_conferences (conference_id)
+	);
+END
 
 
+/* see the columns in hockey divisions table */
+EXEC sp_columns hky_divisions; 
+
+SELECT conference_id, conference_name FROM hockey_main.dbo.hky_conferences;
+
+/* insert the divisions in hockey divisions table */
+INSERT INTO hockey_main.dbo.hky_divisions
+(division_name, division_active, league_id, conference_id)
+VALUES
+('Atlantic', 1, 1, 5),
+('Metropolitan', 1, 1, 5),
+('Central', 1, 1, 6),
+('Pacific', 1, 1, 6),
+('Norris', 0, 1, 7),
+('Smythe', 0, 1, 7),
+('Adams', 0, 1, 8),
+('Patrick', 0, 1, 8);
+
+SELECT * FROM hockey_main.dbo.hky_divisions;
 
 
 
 /* create hockey teams table */
-CREATE TABLE hky_teams
-(
-team_id INT NOT NULL IDENTITY(1,1),
-team_city VARCHAR(35) NOT NULL,
-team_name VARCHAR(35) NOT NULL,
-CONSTRAINT PK_hky_teams PRIMARY KEY (team_id)
-);
+IF NOT EXISTS (SELECT * 
+			   FROM INFORMATION_SCHEMA.TABLES
+			   WHERE TABLE_SCHEMA = 'dbo'
+			   AND TABLE_NAME = 'hky_teams')
+BEGIN
+	CREATE TABLE hockey_main.dbo.hky_teams
+	(
+		team_id INT NOT NULL IDENTITY(1,1),
+		team_city VARCHAR(35) NOT NULL,
+		team_name VARCHAR(35) NOT NULL,
+		CONSTRAINT PK_hky_teams PRIMARY KEY (team_id)
+	);
+END
 
 /* add primary key to hockey teams table */
 /*
@@ -79,7 +137,7 @@ PRIMARY KEY (team_id);*/
 /* add column to hky_teams with division_id */
 
 /* create hockey players table */
-CREATE TABLE hky_players
+CREATE TABLE hockey_main.dbo.hky_players
 (
 player_id INT NOT NULL IDENTITY(1,1),
 player_lastname VARCHAR(35) NOT NULL,
@@ -374,7 +432,7 @@ VALUES
 (92, 'Gabriel', 'Landeskog', 'LW', '6'' 1"', 210, '11/23/1992', 8),
 (29, 'Nathan', 'MacKinnon', 'C', '6'' 0"', 195, '09/01/1995', 8),
 (27, 'Andreas', 'Martinsen', 'LW', '6'' 3"', 220, '06/13/1990', 8),
-(55, 'Cody', 'Mcleod', 'LW', '6'' 2"', 210, '06/26/1984', 8),
+(55, 'Cody', 'McLeod', 'LW', '6'' 2"', 210, '06/26/1984', 8),
 (7, 'John', 'Mitchell', 'C', '6'' 1"', 204, '01/22/1985', 8),
 (8, 'Jack', 'Skille', 'RW', '6'' 1"', 216, '05/19/1987', 8),
 (34, 'Carl', 'Soderberg', 'C', '6'' 3"', 216, '10/12/1985', 8),
@@ -392,11 +450,6 @@ VALUES
 (17, 'Brad', 'Stuart', 'D', '6'' 2"', 215, '11/06/1979', 8),
 (20, 'Reto', 'Berra', 'G', '6'' 4"', 210, '01/03/1987', 8),
 (1, 'Semyon', 'Varlamov', 'G', '6'' 2"', 209, '04/27/1988', 8);
-
-/* change the last name of 
-UPDATE hockey_main.dbo.hky_players
-SET player_lastname = 'MacKinnon'
-WHERE player_id = 1171;
 
 /* columbus blue jackets 2015 roster */
 INSERT INTO hockey_main.dbo.hky_players
@@ -428,7 +481,7 @@ VALUES
 (51, 'Fedor', 'Tyutin', 'D', '6'' 2"', 221, '07/19/1983', 9),
 (72, 'Sergei', 'Bobrovsky', 'G', '6'' 2"', 199, '09/20/1988', 9),
 (70, 'Joonas', 'Korpisalo', 'G', '6'' 3"', 182, '04/28/1994', 9),
-(30, 'Curtis', 'McElhinney', 'G', '6'' 3"', 205, '05/23/1983', 9)
+(30, 'Curtis', 'McElhinney', 'G', '6'' 3"', 205, '05/23/1983', 9);
 
 
 
